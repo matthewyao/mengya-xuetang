@@ -25,7 +25,7 @@ export const useProgressStore = defineStore('progress', () => {
     try {
       const user = await ensureAuth()
       if (!user) return
-      await supabase.from('lesson_progress').upsert({
+      const { error } = await supabase.from('lesson_progress').upsert({
         user_id: user.id,
         subject,
         lesson_id: lessonId,
@@ -33,7 +33,12 @@ export const useProgressStore = defineStore('progress', () => {
         completed: true,
         completed_at: new Date().toISOString(),
       }, { onConflict: 'user_id,subject,lesson_id' })
+      if (error) {
+        console.error('进度同步失败:', error)
+        addToSyncQueue({ type: 'lesson_progress', data: { subject, lessonId, stars, date: new Date().toISOString().slice(0, 10) } })
+      }
     } catch (e) {
+      console.error('进度同步异常:', e)
       addToSyncQueue({ type: 'lesson_progress', data: { subject, lessonId, stars, date: new Date().toISOString().slice(0, 10) } })
     }
   }

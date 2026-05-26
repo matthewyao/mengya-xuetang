@@ -61,7 +61,7 @@ export const useUserStore = defineStore('user', () => {
     try {
       const user = await ensureAuth()
       if (!user) return
-      await supabase.from('profiles').upsert({
+      const { error } = await supabase.from('profiles').upsert({
         id: user.id,
         nickname: '萌芽小学员',
         avatar_emoji: '🐣',
@@ -72,8 +72,12 @@ export const useUserStore = defineStore('user', () => {
         last_sign_in: lastSignIn.value || null,
         updated_at: new Date().toISOString(),
       })
+      if (error) {
+        console.error('推送profile失败:', error)
+        addToSyncQueue({ type: 'profile', data: getProfileSnapshot() })
+      }
     } catch (e) {
-      console.error('推送profile失败:', e)
+      console.error('推送profile异常:', e)
       addToSyncQueue({ type: 'profile', data: getProfileSnapshot() })
     }
   }

@@ -31,15 +31,19 @@ export async function signInAnonymously() {
 
 async function ensureProfile(userId) {
   try {
-    const { data } = await supabase
+    const { data, error: selectError } = await supabase
       .from('profiles')
       .select('id')
       .eq('id', userId)
       .single()
 
+    if (selectError && selectError.code !== 'PGRST116') {
+      console.error('ensureProfile 查询失败:', selectError)
+    }
+
     if (!data) {
       // profile 不存在，创建一个
-      await supabase.from('profiles').insert({
+      const { error: insertError } = await supabase.from('profiles').insert({
         id: userId,
         nickname: '萌芽小学员',
         avatar_emoji: '🐣',
@@ -48,9 +52,15 @@ async function ensureProfile(userId) {
         coins: 100,
         streak_days: 0,
       })
+      if (insertError) {
+        console.error('ensureProfile 创建profile失败:', insertError)
+        console.error('这可能导致后续数据写入失败(foreign key constraint)')
+      } else {
+        console.log('✅ profile创建成功:', userId)
+      }
     }
   } catch (e) {
-    console.error('ensureProfile:', e)
+    console.error('ensureProfile 异常:', e)
   }
 }
 

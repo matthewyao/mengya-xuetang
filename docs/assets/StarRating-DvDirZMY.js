@@ -1,0 +1,1 @@
+import{D as e,E as t,a as n,b as r,g as i,j as a,v as o}from"./index-BkT8NJrQ.js";var s={class:`stars`},c=n({__name:`StarRating`,props:{count:{type:Number,default:0}},setup(n){return(c,l)=>(t(),r(`div`,s,[(t(),r(i,null,e(3,e=>o(`span`,{key:e,class:a([`star`,{filled:e<=n.count,empty:e>n.count}])},`⭐`,2)),64))]))}},[[`__scopeId`,`data-v-38b66b0c`]]);export{c as t};
