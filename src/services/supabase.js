@@ -22,7 +22,36 @@ export async function signInAnonymously() {
     return null
   }
   currentUser = data.user
+
+  // 确保 profile 存在 (应用层创建，不依赖 trigger)
+  await ensureProfile(data.user.id)
+
   return data.user
+}
+
+async function ensureProfile(userId) {
+  try {
+    const { data } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('id', userId)
+      .single()
+
+    if (!data) {
+      // profile 不存在，创建一个
+      await supabase.from('profiles').insert({
+        id: userId,
+        nickname: '萌芽小学员',
+        avatar_emoji: '🐣',
+        level: 1,
+        exp: 0,
+        coins: 100,
+        streak_days: 0,
+      })
+    }
+  } catch (e) {
+    console.error('ensureProfile:', e)
+  }
 }
 
 export function getCurrentUser() {
