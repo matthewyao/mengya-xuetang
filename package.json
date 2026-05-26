@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.106.2",
     "canvas-confetti": "^1.9.4",
     "howler": "^2.2.4",
     "lottie-web": "^5.13.0",

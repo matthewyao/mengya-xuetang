@@ -1,1 +1,0 @@
-import{D as e,E as t,b as n,g as r,j as i,l as a,v as o}from"./index-cjvfi_hC.js";var s={class:`stars`},c=a({__name:`StarRating`,props:{count:{type:Number,default:0}},setup(a){return(c,l)=>(t(),n(`div`,s,[(t(),n(r,null,e(3,e=>o(`span`,{key:e,class:i([`star`,{filled:e<=a.count,empty:e>a.count}])},`⭐`,2)),64))]))}},[[`__scopeId`,`data-v-38b66b0c`]]);export{c as t};
