@@ -195,42 +195,77 @@ function nextLesson() {
 </script>
 
 <style scoped>
-.lesson-page { background: linear-gradient(180deg, #EDE7F6, #F3E5F5); min-height: 100vh; }
+.lesson-page { background: var(--mc-light); min-height: 100vh; }
 .lesson-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; }
-.btn-back { background: rgba(255,255,255,0.7); border: none; border-radius: 20px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
-.lesson-title { font-size: 18px; font-weight: 700; }
+.btn-back {
+  background: #8B8B8B; border: 2px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -2px -2px 0 #555, inset 2px 2px 0 #aaa;
+  padding: 6px 12px; font-size: 8px; font-family: 'Press Start 2P', monospace; color: #fff;
+  text-shadow: 1px 1px 0 #373737; cursor: pointer;
+}
+.btn-back:active { border-top-color: #373737; border-left-color: #373737; border-bottom-color: #C6C6C6; border-right-color: #C6C6C6; }
+.lesson-title { font-size: 12px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; }
 .lesson-content { padding: 16px; display: flex; flex-direction: column; align-items: center; }
 
-.letter-card { background: #fff; border-radius: 20px; padding: 32px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; margin-bottom: 20px; }
-.letter-big, .letter-big-card { font-size: 80px; font-weight: 700; color: #A78BFA; line-height: 1; }
-.letter-big-card { background: #fff; border-radius: 20px; padding: 24px 48px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 16px; }
+.letter-card {
+  background: #8B8B8B; padding: 32px; text-align: center; width: 100%; margin-bottom: 20px;
+  border: 3px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -3px -3px 0 #555, inset 3px 3px 0 #aaa;
+}
+.letter-big, .letter-big-card { font-size: 80px; font-weight: 700; color: var(--mc-blue); line-height: 1; text-shadow: 4px 4px 0 #373737; }
+.letter-big-card {
+  background: #8B8B8B; padding: 24px 48px; margin-bottom: 16px;
+  border: 3px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -3px -3px 0 #555, inset 3px 3px 0 #aaa;
+}
 .letter-emoji { font-size: 48px; margin: 12px 0; }
-.letter-word { font-size: 24px; font-weight: 600; margin-bottom: 12px; color: #666; }
-.btn-listen { background: linear-gradient(135deg, #A78BFA, #7C3AED); color: #fff; border: none; border-radius: 30px; padding: 12px 24px; font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 12px; }
+.letter-word { font-size: 14px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; margin-bottom: 12px; }
+.btn-listen {
+  background: var(--mc-blue); color: #fff;
+  border: 3px solid #373737; border-top-color: #8B8B8B; border-left-color: #8B8B8B;
+  box-shadow: inset -3px -3px 0 #373737, inset 3px 3px 0 #8B8B8B;
+  padding: 12px 24px; font-size: 10px; font-family: 'Press Start 2P', monospace;
+  text-shadow: 1px 1px 0 #373737; cursor: pointer; margin-bottom: 12px;
+}
+.btn-listen:active { border-top-color: #373737; border-left-color: #373737; border-bottom-color: #8B8B8B; border-right-color: #8B8B8B; }
 
 .record-step, .match-step { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.record-hint, .match-hint { font-size: 16px; font-weight: 600; color: #666; }
+.record-hint, .match-hint { font-size: 10px; font-family: 'Press Start 2P', monospace; color: #C6C6C6; text-shadow: 1px 1px 0 #373737; }
 
 .match-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 300px; }
-.match-card { background: #fff; border: 3px solid #E0E0E0; border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.2s; }
-.match-card.selected { border-color: #A78BFA; background: #EDE7F6; }
-.match-card.correct { border-color: #4CAF50; background: #C8E6C9; }
-.match-card.wrong { border-color: #FF5252; background: #FFCDD2; }
+.match-card {
+  background: #8B8B8B; border: 3px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -3px -3px 0 #555, inset 3px 3px 0 #aaa;
+  padding: 20px; text-align: center; cursor: pointer;
+}
+.match-card.selected { background: var(--mc-blue); border-color: #373737; }
+.match-card.correct { background: var(--mc-green); border-color: #373737; }
+.match-card.wrong { background: var(--mc-red); border-color: #373737; }
 .match-emoji { font-size: 32px; display: block; }
-.match-word { font-size: 14px; color: #666; }
+.match-word { font-size: 8px; color: #C6C6C6; font-family: 'Press Start 2P', monospace; }
 
 .match-game-area { display: flex; gap: 24px; width: 100%; justify-content: center; margin: 16px 0; }
 .match-col { display: flex; flex-direction: column; gap: 10px; }
-.match-word-card { background: #fff; border: 2px solid #E0E0E0; border-radius: 12px; padding: 12px 20px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center; min-width: 100px; }
-.match-word-card.selected { border-color: #A78BFA; background: #EDE7F6; }
-.match-word-card.matched { background: #C8E6C9; border-color: #4CAF50; opacity: 0.6; }
-.match-score { font-size: 16px; font-weight: 600; color: #A78BFA; }
+.match-word-card {
+  background: #8B8B8B; border: 2px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -2px -2px 0 #555, inset 2px 2px 0 #aaa;
+  padding: 12px 20px; font-size: 10px; font-family: 'Press Start 2P', monospace; color: #fff;
+  text-shadow: 1px 1px 0 #373737; cursor: pointer; text-align: center; min-width: 100px;
+}
+.match-word-card.selected { background: var(--mc-blue); border-color: #373737; }
+.match-word-card.matched { background: var(--mc-green); border-color: #373737; opacity: 0.6; }
+.match-score { font-size: 10px; font-family: 'Press Start 2P', monospace; color: var(--mc-blue); text-shadow: 1px 1px 0 #373737; }
 
 .step-result { text-align: center; width: 100%; }
 .result-emoji { font-size: 64px; margin-bottom: 8px; }
-.result-title { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.result-title { font-size: 14px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; margin-bottom: 12px; }
 .result-rewards { display: flex; justify-content: center; gap: 24px; margin: 16px 0; }
-.reward-item { font-size: 18px; font-weight: 600; }
+.reward-item { font-size: 10px; font-family: 'Press Start 2P', monospace; color: var(--mc-gold); text-shadow: 1px 1px 0 #373737; }
 .result-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 16px; }
-.btn-secondary { background: #fff; border: 2px solid #A78BFA; border-radius: 30px; padding: 12px 24px; font-size: 15px; font-weight: 600; color: #A78BFA; cursor: pointer; }
+.btn-secondary {
+  background: #555; border: 2px solid #373737; border-top-color: #8B8B8B; border-left-color: #8B8B8B;
+  box-shadow: inset -2px -2px 0 #373737, inset 2px 2px 0 #8B8B8B;
+  padding: 12px 24px; font-size: 8px; font-family: 'Press Start 2P', monospace; color: #fff;
+  text-shadow: 1px 1px 0 #373737; cursor: pointer;
+}
 </style>

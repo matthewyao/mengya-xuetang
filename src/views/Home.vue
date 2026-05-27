@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="header">
       <div class="header-left">
-        <div class="logo">🌱 萌芽学堂</div>
+        <div class="logo">⛏️ 萌芽学堂</div>
       </div>
       <div class="header-right">
         <div class="stat-badge">🪙 {{ user.coins }}</div>
@@ -45,7 +45,7 @@
     <div class="section">
       <div class="section-title">📚 学习科目</div>
       <div class="subject-grid">
-        <div v-for="sub in subjects" :key="sub.type" class="subject-card" :style="{ background: sub.bg }" @click="$router.push('/subject/' + sub.type)">
+        <div v-for="sub in subjects" :key="sub.type" class="subject-card" :style="{ borderColor: sub.color }" @click="$router.push('/subject/' + sub.type)">
           <div class="subject-emoji">{{ sub.emoji }}</div>
           <div class="subject-name">{{ sub.name }}</div>
           <div class="subject-progress">
@@ -60,7 +60,7 @@
 
     <!-- Motivational Banner -->
     <div class="banner">
-      <div class="banner-text">🌈 每天进步一点点，快乐学习每一天！</div>
+      <div class="banner-text">⛏️ 每天进步一点点，快乐学习每一天！</div>
     </div>
   </div>
 </template>
@@ -90,49 +90,80 @@ function getSubjectProgress(type, total) {
 }
 
 const subjects = computed(() => [
-  { type: 'pinyin', name: '拼音', emoji: '📖', bg: 'linear-gradient(135deg, #FFF3E0, #FFE0B2)', color: '#FF8C42', progress: getSubjectProgress('pinyin', getAllPinyinLessons().length) },
-  { type: 'math', name: '数学', emoji: '🔢', bg: 'linear-gradient(135deg, #E0F7FA, #B2EBF2)', color: '#4ECDC4', progress: getSubjectProgress('math', getAllMathLessons().length) },
-  { type: 'english', name: '英语', emoji: '🔤', bg: 'linear-gradient(135deg, #EDE7F6, #D1C4E9)', color: '#A78BFA', progress: getSubjectProgress('english', getAllEnglishLessons().length) },
-  { type: 'weiqi', name: '围棋', emoji: '♟️', bg: 'linear-gradient(135deg, #E8F5E9, #C8E6C9)', color: '#34D399', progress: getSubjectProgress('weiqi', getAllWeiqiLessons().length) },
+  { type: 'pinyin', name: '拼音', emoji: '📖', color: '#5D8C28', progress: getSubjectProgress('pinyin', getAllPinyinLessons().length) },
+  { type: 'math', name: '数学', emoji: '🔢', color: '#C8302D', progress: getSubjectProgress('math', getAllMathLessons().length) },
+  { type: 'english', name: '英语', emoji: '🔤', color: '#3C5AA2', progress: getSubjectProgress('english', getAllEnglishLessons().length) },
+  { type: 'weiqi', name: '围棋', emoji: '♟️', color: '#1B9E5B', progress: getSubjectProgress('weiqi', getAllWeiqiLessons().length) },
 ])
 </script>
 
 <style scoped>
 .home { padding: 16px; padding-bottom: 80px; }
 .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.logo { font-size: 20px; font-weight: 700; }
+.logo { font-size: 14px; font-family: 'Press Start 2P', monospace; text-shadow: 2px 2px 0 #373737; color: #fff; }
 .header-right { display: flex; gap: 8px; }
-.stat-badge { background: #fff; border-radius: 20px; padding: 4px 12px; font-size: 13px; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.stat-badge {
+  background: #555; padding: 6px 10px; font-size: 10px; font-weight: 400;
+  font-family: 'Press Start 2P', monospace; color: #fff;
+  border: 2px solid #373737; border-top-color: #8B8B8B; border-left-color: #8B8B8B;
+  box-shadow: inset -2px -2px 0 #373737, inset 2px 2px 0 #8B8B8B;
+}
 
 .quick-actions { display: flex; gap: 12px; margin-bottom: 16px; }
-.action-card { flex: 1; display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.15s; }
-.action-card:active { transform: scale(0.97); }
-.sign-in-card { border-left: 4px solid #FF8C42; }
-.task-card { border-left: 4px solid #4ECDC4; }
-.action-emoji { font-size: 28px; }
-.action-title { font-size: 14px; font-weight: 600; }
-.action-sub { font-size: 12px; color: #999; }
+.action-card {
+  flex: 1; display: flex; align-items: center; gap: 10px;
+  background: #8B8B8B; padding: 12px; cursor: pointer;
+  border: 3px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -3px -3px 0 #555, inset 3px 3px 0 #aaa;
+}
+.action-card:active {
+  border-top-color: #373737; border-left-color: #373737;
+  border-bottom-color: #C6C6C6; border-right-color: #C6C6C6;
+}
+.sign-in-card { border-left: 4px solid var(--mc-green); }
+.task-card { border-left: 4px solid var(--mc-red); }
+.action-emoji { font-size: 24px; }
+.action-title { font-size: 10px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 1px 1px 0 #373737; }
+.action-sub { font-size: 8px; color: #C6C6C6; font-family: 'Press Start 2P', monospace; margin-top: 4px; }
 
 .section { margin-bottom: 16px; }
-.section-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.section-title { font-size: 12px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; margin-bottom: 10px; }
 
-.task-list { background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.task-item { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+.task-list {
+  background: #8B8B8B; padding: 12px;
+  border: 3px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -3px -3px 0 #555, inset 3px 3px 0 #aaa;
+}
+.task-item {
+  display: flex; align-items: center; gap: 8px; padding: 8px 0;
+  border-bottom: 2px solid #555;
+}
 .task-item:last-child { border-bottom: none; }
 .task-item.done { opacity: 0.5; }
-.task-check { font-size: 16px; }
-.task-desc { flex: 1; font-size: 13px; }
-.task-reward { font-size: 12px; color: #FF8C42; font-weight: 600; }
+.task-check { font-size: 14px; }
+.task-desc { flex: 1; font-size: 8px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 1px 1px 0 #373737; }
+.task-reward { font-size: 8px; color: var(--mc-gold); font-family: 'Press Start 2P', monospace; text-shadow: 1px 1px 0 #373737; }
 
 .subject-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.subject-card { border-radius: 16px; padding: 20px 16px; text-align: center; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.subject-card:active { transform: scale(0.96); }
-.subject-emoji { font-size: 36px; margin-bottom: 8px; }
-.subject-name { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-.progress-bar { height: 6px; background: rgba(0,0,0,0.08); border-radius: 3px; overflow: hidden; margin-bottom: 4px; }
-.progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
-.progress-text { font-size: 11px; color: #999; }
+.subject-card {
+  background: #8B8B8B; padding: 16px 12px; text-align: center; cursor: pointer;
+  border: 3px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -3px -3px 0 #555, inset 3px 3px 0 #aaa;
+}
+.subject-card:active {
+  border-top-color: #373737; border-left-color: #373737;
+  border-bottom-color: #C6C6C6; border-right-color: #C6C6C6;
+}
+.subject-emoji { font-size: 32px; margin-bottom: 8px; }
+.subject-name { font-size: 12px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; margin-bottom: 8px; }
+.progress-bar { height: 8px; background: #373737; border: 2px solid #373737; overflow: hidden; margin-bottom: 4px; }
+.progress-fill { height: 100%; transition: width 0.5s ease; image-rendering: pixelated; }
+.progress-text { font-size: 8px; color: #C6C6C6; font-family: 'Press Start 2P', monospace; }
 
-.banner { background: linear-gradient(135deg, #FFE0B2, #FFCC80); border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 16px; }
-.banner-text { font-size: 14px; font-weight: 600; color: #E65100; }
+.banner {
+  background: #555; padding: 16px; text-align: center; margin-bottom: 16px;
+  border: 3px solid #373737; border-top-color: #8B8B8B; border-left-color: #8B8B8B;
+  box-shadow: inset -3px -3px 0 #373737, inset 3px 3px 0 #8B8B8B;
+}
+.banner-text { font-size: 10px; font-family: 'Press Start 2P', monospace; color: var(--mc-gold); text-shadow: 2px 2px 0 #373737; }
 </style>

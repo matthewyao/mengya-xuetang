@@ -4,7 +4,7 @@
     <div class="rec-controls">
       <button class="btn-record" :class="{ recording }" @click="toggleRecord">
         <span class="mic-icon">{{ recording ? '⏹' : '🎤' }}</span>
-        <span>{{ recording ? '停止录音' : '按住录音' }}</span>
+        <span>{{ recording ? '停止' : '录音' }}</span>
       </button>
     </div>
     <div v-if="score !== null" class="score-display">
@@ -107,10 +107,10 @@ function drawWaveform() {
     if (!recording.value) return
     animFrame = requestAnimationFrame(draw)
     analyser.getByteTimeDomainData(dataArray)
-    ctx.fillStyle = '#FFF5EB'
+    ctx.fillStyle = '#555'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     ctx.lineWidth = 2
-    ctx.strokeStyle = '#FF8C42'
+    ctx.strokeStyle = '#5D8C28'
     ctx.beginPath()
     const sliceWidth = canvas.width / bufferLength
     let x = 0
@@ -141,27 +141,39 @@ onUnmounted(() => {
 
 <style scoped>
 .recording-area { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 12px; }
-.waveform { width: 100%; max-width: 280px; height: 60px; border-radius: 12px; background: #FFF5EB; }
+.waveform {
+  width: 100%; max-width: 280px; height: 60px; background: #555;
+  border: 2px solid #373737; border-top-color: #8B8B8B; border-left-color: #8B8B8B;
+  box-shadow: inset -2px -2px 0 #373737, inset 2px 2px 0 #8B8B8B;
+}
 .rec-controls { display: flex; gap: 12px; }
 .btn-record {
   display: flex; flex-direction: column; align-items: center; gap: 4px;
-  background: linear-gradient(135deg, #FF8C42, #FF6B2B); color: #fff;
-  border: none; border-radius: 50%; width: 80px; height: 80px;
-  font-size: 12px; font-weight: 600; cursor: pointer; transition: transform 0.2s;
-  box-shadow: 0 4px 16px rgba(255,140,66,0.4);
+  background: var(--mc-green); color: #fff;
+  border: 3px solid #373737; border-top-color: #8B8B8B; border-left-color: #8B8B8B;
+  box-shadow: inset -3px -3px 0 #373737, inset 3px 3px 0 #8B8B8B;
+  width: 80px; height: 80px;
+  font-size: 8px; font-family: 'Press Start 2P', monospace;
+  text-shadow: 1px 1px 0 #373737; cursor: pointer;
 }
-.btn-record.recording { animation: pulse 1s infinite; background: linear-gradient(135deg, #FF5252, #D32F2F); }
-.btn-record:active { transform: scale(0.9); }
+.btn-record.recording { background: var(--mc-red); animation: pulse 1s infinite; }
+.btn-record:active {
+  border-top-color: #373737; border-left-color: #373737;
+  border-bottom-color: #8B8B8B; border-right-color: #8B8B8B;
+}
 .mic-icon { font-size: 24px; }
 .score-display { text-align: center; }
 .score-stars { display: flex; gap: 4px; justify-content: center; margin-bottom: 4px; }
 .score-star { font-size: 24px; filter: grayscale(1); opacity: 0.3; }
 .score-star.filled { filter: none; opacity: 1; animation: star-pop 0.4s ease forwards; }
-.score-text { font-size: 14px; color: #666; }
+.score-text { font-size: 8px; color: #C6C6C6; font-family: 'Press Start 2P', monospace; text-shadow: 1px 1px 0 #373737; }
 .playback-row { display: flex; gap: 8px; }
 .btn-play {
-  background: #FFF3E0; border: 2px solid #FF8C42; border-radius: 20px;
-  padding: 8px 16px; font-size: 13px; color: #FF8C42; cursor: pointer;
+  background: #8B8B8B; border: 2px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -2px -2px 0 #555, inset 2px 2px 0 #aaa;
+  padding: 8px 16px; font-size: 8px; font-family: 'Press Start 2P', monospace; color: #fff;
+  text-shadow: 1px 1px 0 #373737; cursor: pointer;
 }
+.btn-play:active { border-top-color: #373737; border-left-color: #373737; border-bottom-color: #C6C6C6; border-right-color: #C6C6C6; }
 @keyframes star-pop { 0% { transform: scale(0); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
 </style>

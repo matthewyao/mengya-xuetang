@@ -90,13 +90,12 @@ const lastMove = ref(null)
 function initBoard() {
   const size = lessonData.value?.size || 9
   boardState.value = Array(size).fill(null).map(() => Array(size).fill(0))
-  // For puzzle/capture lessons, set up some stones
   if (lessonData.value?.type === 'puzzle' && size >= 5) {
     const mid = Math.floor(size / 2)
-    boardState.value[mid][mid] = 2 // white
-    if (mid > 0) boardState.value[mid - 1][mid] = 1 // black
-    if (mid < size - 1) boardState.value[mid + 1][mid] = 1 // black
-    if (mid > 0) boardState.value[mid][mid - 1] = 1 // black
+    boardState.value[mid][mid] = 2
+    if (mid > 0) boardState.value[mid - 1][mid] = 1
+    if (mid < size - 1) boardState.value[mid + 1][mid] = 1
+    if (mid > 0) boardState.value[mid][mid - 1] = 1
   }
 }
 
@@ -111,12 +110,12 @@ function drawBoard() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-  // Board background
-  ctx.fillStyle = '#DEB887'
+  // Board background - wood texture
+  ctx.fillStyle = '#C8A464'
   ctx.fillRect(0, 0, total, total)
 
   // Grid lines
-  ctx.strokeStyle = '#8B7355'
+  ctx.strokeStyle = '#8B6914'
   ctx.lineWidth = 1
   for (let i = 0; i < size; i++) {
     ctx.beginPath()
@@ -132,7 +131,7 @@ function drawBoard() {
   // Star points (for 9x9)
   if (size === 9) {
     const starPoints = [[2, 2], [2, 6], [6, 2], [6, 6], [4, 4]]
-    ctx.fillStyle = '#8B7355'
+    ctx.fillStyle = '#8B6914'
     starPoints.forEach(([r, c]) => {
       ctx.beginPath()
       ctx.arc(padding + c * cellSize, padding + r * cellSize, 3, 0, Math.PI * 2)
@@ -151,13 +150,11 @@ function drawBoard() {
         ctx.beginPath()
         ctx.arc(x, y, radius, 0, Math.PI * 2)
         if (boardState.value[r][c] === 1) {
-          // Black stone
           const grad = ctx.createRadialGradient(x - 3, y - 3, 2, x, y, radius)
           grad.addColorStop(0, '#555')
           grad.addColorStop(1, '#000')
           ctx.fillStyle = grad
         } else {
-          // White stone
           const grad = ctx.createRadialGradient(x - 3, y - 3, 2, x, y, radius)
           grad.addColorStop(0, '#fff')
           grad.addColorStop(1, '#ddd')
@@ -165,7 +162,6 @@ function drawBoard() {
         }
         ctx.fill()
 
-        // Last move marker
         if (lastMove.value && lastMove.value[0] === r && lastMove.value[1] === c) {
           ctx.fillStyle = boardState.value[r][c] === 1 ? '#fff' : '#000'
           ctx.beginPath()
@@ -201,9 +197,9 @@ function drawDemoBoard() {
   const cellSize = 24
   const padding = 12
 
-  ctx.fillStyle = '#DEB887'
+  ctx.fillStyle = '#C8A464'
   ctx.fillRect(0, 0, canvas.width, canvas.height)
-  ctx.strokeStyle = '#8B7355'
+  ctx.strokeStyle = '#8B6914'
   ctx.lineWidth = 1
   for (let i = 0; i < size; i++) {
     ctx.beginPath()
@@ -215,7 +211,6 @@ function drawDemoBoard() {
     ctx.lineTo(padding + (size - 1) * cellSize, padding + i * cellSize)
     ctx.stroke()
   }
-  // Demo stones
   const stones = [[2, 2, 1], [2, 3, 2], [3, 2, 2], [4, 4, 1], [5, 5, 2]]
   stones.forEach(([r, c, color]) => {
     const x = padding + c * cellSize
@@ -244,25 +239,22 @@ function handleBoardClick(e) {
   if (row < 0 || row >= size || col < 0 || col >= size) return
   if (boardState.value[row][col] !== 0) return
 
-  boardState.value[row][col] = 1 // Place black stone
+  boardState.value[row][col] = 1
   lastMove.value = [row, col]
   playClick()
 
-  // Simple capture check
   checkCapture(row, col, size)
   drawBoard()
   userStore.updateTaskProgress('weiqi')
 }
 
 function checkCapture(r, c, size) {
-  // Check adjacent white stones for capture
   const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]]
   dirs.forEach(([dr, dc]) => {
     const nr = r + dr
     const nc = c + dc
     if (nr < 0 || nr >= size || nc < 0 || nc >= size) return
     if (boardState.value[nr][nc] !== 2) return
-    // Check if this white stone has liberties
     let hasLiberty = false
     dirs.forEach(([dr2, dc2]) => {
       const nr2 = nr + dr2
@@ -272,7 +264,7 @@ function checkCapture(r, c, size) {
       }
     })
     if (!hasLiberty) {
-      boardState.value[nr][nc] = 0 // Capture
+      boardState.value[nr][nc] = 0
     }
   })
 }
@@ -320,30 +312,50 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.lesson-page { background: linear-gradient(180deg, #E8F5E9, #F1F8E9); min-height: 100vh; }
+.lesson-page { background: var(--mc-light); min-height: 100vh; }
 .lesson-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; }
-.btn-back { background: rgba(255,255,255,0.7); border: none; border-radius: 20px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
-.lesson-title { font-size: 18px; font-weight: 700; }
+.btn-back {
+  background: #8B8B8B; border: 2px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -2px -2px 0 #555, inset 2px 2px 0 #aaa;
+  padding: 6px 12px; font-size: 8px; font-family: 'Press Start 2P', monospace; color: #fff;
+  text-shadow: 1px 1px 0 #373737; cursor: pointer;
+}
+.btn-back:active { border-top-color: #373737; border-left-color: #373737; border-bottom-color: #C6C6C6; border-right-color: #C6C6C6; }
+.lesson-title { font-size: 12px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; }
 .lesson-content { padding: 16px; display: flex; flex-direction: column; align-items: center; }
 
-.intro-card { background: #fff; border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; margin-bottom: 20px; }
+.intro-card {
+  background: #8B8B8B; padding: 24px; text-align: center; width: 100%; margin-bottom: 20px;
+  border: 3px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -3px -3px 0 #555, inset 3px 3px 0 #aaa;
+}
 .intro-emoji { font-size: 48px; margin-bottom: 12px; }
-.intro-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-.intro-desc { font-size: 15px; color: #666; line-height: 1.6; text-align: left; }
+.intro-title { font-size: 12px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; margin-bottom: 8px; }
+.intro-desc { font-size: 8px; color: #C6C6C6; font-family: 'Press Start 2P', monospace; line-height: 1.6; text-align: left; }
 .mini-board-demo { display: flex; justify-content: center; margin-top: 16px; }
 .stone-demo { display: flex; justify-content: center; gap: 24px; margin-top: 16px; }
 .stone { font-size: 48px; }
 
-.practice-desc { font-size: 14px; color: #666; margin-bottom: 12px; text-align: center; background: #fff; padding: 12px; border-radius: 12px; width: 100%; }
+.practice-desc {
+  font-size: 8px; color: #C6C6C6; font-family: 'Press Start 2P', monospace; margin-bottom: 12px; text-align: center;
+  background: #8B8B8B; padding: 12px; width: 100%;
+  border: 2px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -2px -2px 0 #555, inset 2px 2px 0 #aaa;
+}
 .board-container { display: flex; justify-content: center; margin-bottom: 12px; overflow: auto; }
-canvas { border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-.practice-info { font-size: 14px; color: #999; margin-bottom: 16px; }
+canvas { box-shadow: 0 4px 20px rgba(0,0,0,0.3); border: 3px solid #373737; }
+.practice-info { font-size: 8px; color: #8B8B8B; font-family: 'Press Start 2P', monospace; margin-bottom: 16px; }
 
 .step-result { text-align: center; width: 100%; }
 .result-emoji { font-size: 64px; margin-bottom: 8px; }
-.result-title { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.result-title { font-size: 14px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; margin-bottom: 12px; }
 .result-rewards { display: flex; justify-content: center; gap: 24px; margin: 16px 0; }
-.reward-item { font-size: 18px; font-weight: 600; }
+.reward-item { font-size: 10px; font-family: 'Press Start 2P', monospace; color: var(--mc-gold); text-shadow: 1px 1px 0 #373737; }
 .result-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 16px; }
-.btn-secondary { background: #fff; border: 2px solid #34D399; border-radius: 30px; padding: 12px 24px; font-size: 15px; font-weight: 600; color: #34D399; cursor: pointer; }
+.btn-secondary {
+  background: #555; border: 2px solid #373737; border-top-color: #8B8B8B; border-left-color: #8B8B8B;
+  box-shadow: inset -2px -2px 0 #373737, inset 2px 2px 0 #8B8B8B;
+  padding: 12px 24px; font-size: 8px; font-family: 'Press Start 2P', monospace; color: #fff;
+  text-shadow: 1px 1px 0 #373737; cursor: pointer;
+}
 </style>

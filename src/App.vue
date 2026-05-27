@@ -74,7 +74,7 @@ onMounted(async () => {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
-  background: #FFF8F0;
+  background: #C6C6C6;
 }
 .offline-hint {
   position: fixed;
@@ -83,14 +83,16 @@ onMounted(async () => {
   transform: translateX(-50%);
   max-width: 480px;
   width: 100%;
-  background: #FF9800;
+  background: #C8302D;
   color: #fff;
   text-align: center;
-  padding: 6px 16px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 8px 16px;
+  font-size: 8px;
+  font-family: 'Press Start 2P', monospace;
   z-index: 9999;
   animation: slideDown 0.3s ease;
+  border-bottom: 3px solid #373737;
+  text-shadow: 1px 1px 0 #373737;
 }
 @keyframes slideDown {
   from { transform: translateX(-50%) translateY(-100%); }

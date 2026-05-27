@@ -9,10 +9,10 @@
 
 <script setup>
 const tabs = [
-  { path: '/', emoji: '🏠', label: '主页' },
-  { path: '/store', emoji: '🛒', label: '商城' },
-  { path: '/growth', emoji: '📊', label: '成长' },
-  { path: '/profile', emoji: '👤', label: '我的' },
+  { path: '/', emoji: '🏠', label: '主城' },
+  { path: '/store', emoji: '⚒️', label: '商店' },
+  { path: '/growth', emoji: '📈', label: '成长' },
+  { path: '/profile', emoji: '🛡️', label: '我的' },
 ]
 </script>
 
@@ -20,16 +20,17 @@ const tabs = [
 .tabbar {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
   width: 100%; max-width: 480px; height: 64px;
-  background: #fff; display: flex; align-items: center; justify-content: space-around;
-  box-shadow: 0 -2px 12px rgba(0,0,0,0.08); z-index: 100; border-radius: 16px 16px 0 0;
+  background: #555; display: flex; align-items: center; justify-content: space-around;
+  border-top: 4px solid #373737; z-index: 100;
+  box-shadow: inset 0 4px 0 #8B8B8B, inset 0 -2px 0 #373737;
 }
 .tab-item {
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
-  text-decoration: none; color: #999; font-size: 11px; padding: 4px 12px;
-  transition: color 0.2s;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  text-decoration: none; color: #8B8B8B; font-size: 8px; padding: 4px 12px;
+  font-family: 'Press Start 2P', monospace; transition: color 0.2s;
 }
-.tab-item.active { color: var(--color-primary); }
-.tab-emoji { font-size: 22px; transition: transform 0.2s; }
-.tab-item.active .tab-emoji { transform: scale(1.15); }
-.tab-label { font-weight: 500; }
+.tab-item.active { color: var(--mc-green); }
+.tab-emoji { font-size: 20px; transition: transform 0.2s; }
+.tab-item.active .tab-emoji { transform: scale(1.1); }
+.tab-label { font-weight: 400; }
 </style>

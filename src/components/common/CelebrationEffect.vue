@@ -10,7 +10,7 @@ import { ref } from 'vue'
 const active = ref(false)
 
 function confettiStyle(i) {
-  const colors = ['#FF8C42', '#4ECDC4', '#A78BFA', '#FFD700', '#FF5252', '#34D399']
+  const colors = ['#5D8C28', '#C8302D', '#3C5AA2', '#FCDB05', '#E02020', '#1B9E5B', '#86612E', '#2B5FA1']
   return {
     left: Math.random() * 100 + '%',
     animationDelay: Math.random() * 0.5 + 's',
@@ -18,7 +18,7 @@ function confettiStyle(i) {
     background: colors[i % colors.length],
     width: (6 + Math.random() * 8) + 'px',
     height: (6 + Math.random() * 8) + 'px',
-    borderRadius: Math.random() > 0.5 ? '50%' : '2px',
+    borderRadius: 0,
   }
 }
 
@@ -32,5 +32,5 @@ defineExpose({ show })
 
 <style scoped>
 .celebration { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
-.confetti { position: absolute; top: -20px; animation: confetti-fall linear forwards; }
+.confetti { position: absolute; top: -20px; animation: confetti-fall linear forwards; border: 1px solid rgba(0,0,0,0.3); }
 </style>

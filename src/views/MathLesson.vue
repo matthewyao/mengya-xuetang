@@ -171,42 +171,63 @@ function nextLesson() {
 </script>
 
 <style scoped>
-.lesson-page { background: linear-gradient(180deg, #E0F7FA, #E0F2F1); min-height: 100vh; }
+.lesson-page { background: var(--mc-light); min-height: 100vh; }
 .lesson-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; }
-.btn-back { background: rgba(255,255,255,0.7); border: none; border-radius: 20px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
-.lesson-title { font-size: 18px; font-weight: 700; }
+.btn-back {
+  background: #8B8B8B; border: 2px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -2px -2px 0 #555, inset 2px 2px 0 #aaa;
+  padding: 6px 12px; font-size: 8px; font-family: 'Press Start 2P', monospace; color: #fff;
+  text-shadow: 1px 1px 0 #373737; cursor: pointer;
+}
+.btn-back:active { border-top-color: #373737; border-left-color: #373737; border-bottom-color: #C6C6C6; border-right-color: #C6C6C6; }
+.lesson-title { font-size: 12px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; }
 .lesson-content { padding: 16px; display: flex; flex-direction: column; align-items: center; }
 
-.math-card, .calc-card { background: #fff; border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 20px; width: 100%; }
-.number-big { font-size: 80px; font-weight: 700; color: #4ECDC4; }
+.math-card, .calc-card {
+  background: #8B8B8B; padding: 24px; text-align: center; margin-bottom: 20px; width: 100%;
+  border: 3px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -3px -3px 0 #555, inset 3px 3px 0 #aaa;
+}
+.number-big { font-size: 80px; font-weight: 700; color: var(--mc-red); text-shadow: 4px 4px 0 #373737; }
 .items-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 16px 0; }
 .item-emoji { font-size: 32px; }
-.count-text { font-size: 16px; font-weight: 600; color: #666; }
+.count-text { font-size: 10px; font-family: 'Press Start 2P', monospace; color: #C6C6C6; text-shadow: 1px 1px 0 #373737; }
 
 .tap-area { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 16px 0; }
-.tap-item { font-size: 36px; cursor: pointer; transition: transform 0.15s; padding: 8px; border-radius: 12px; }
+.tap-item { font-size: 36px; cursor: pointer; padding: 8px; border: 2px solid transparent; }
 .tap-item:active { transform: scale(0.9); }
-.tap-item.tapped { background: #C8E6C9; transform: scale(1.1); }
-.count-display { font-size: 24px; font-weight: 700; color: #4ECDC4; margin-bottom: 16px; }
+.tap-item.tapped { background: var(--mc-green); border: 2px solid #373737; transform: scale(1.1); }
+.count-display { font-size: 20px; font-family: 'Press Start 2P', monospace; color: var(--mc-red); text-shadow: 2px 2px 0 #373737; margin-bottom: 16px; }
 
 .calc-visual { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
 .calc-items-left, .calc-items-right { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
 .calc-item { font-size: 24px; }
-.calc-op { font-size: 32px; font-weight: 700; color: #4ECDC4; }
-.calc-formula { font-size: 36px; font-weight: 700; color: #333; }
+.calc-op { font-size: 32px; font-weight: 700; color: var(--mc-red); text-shadow: 2px 2px 0 #373737; }
+.calc-formula { font-size: 28px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 3px 3px 0 #373737; }
 
 .answer-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 280px; margin-bottom: 16px; }
-.btn-answer { background: #fff; border: 3px solid #E0E0E0; border-radius: 16px; padding: 16px; font-size: 24px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
-.btn-answer.selected { border-color: #4ECDC4; background: #E0F7FA; }
-.btn-answer.correct { border-color: #4CAF50; background: #C8E6C9; }
-.btn-answer.wrong { border-color: #FF5252; background: #FFCDD2; }
+.btn-answer {
+  background: #8B8B8B; border: 3px solid #373737; border-top-color: #C6C6C6; border-left-color: #C6C6C6;
+  box-shadow: inset -3px -3px 0 #555, inset 3px 3px 0 #aaa;
+  padding: 16px; font-size: 20px; font-family: 'Press Start 2P', monospace; color: #fff;
+  text-shadow: 2px 2px 0 #373737; cursor: pointer;
+}
+.btn-answer:active { border-top-color: #373737; border-left-color: #373737; border-bottom-color: #C6C6C6; border-right-color: #C6C6C6; }
+.btn-answer.selected { background: var(--mc-blue); border-color: #373737; }
+.btn-answer.correct { background: var(--mc-green); border-color: #373737; }
+.btn-answer.wrong { background: var(--mc-red); border-color: #373737; }
 
-.result-msg { font-size: 18px; font-weight: 600; margin-bottom: 16px; text-align: center; }
+.result-msg { font-size: 10px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; margin-bottom: 16px; text-align: center; }
 .step-result { text-align: center; width: 100%; }
 .result-emoji { font-size: 64px; margin-bottom: 8px; }
-.result-title { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.result-title { font-size: 14px; font-family: 'Press Start 2P', monospace; color: #fff; text-shadow: 2px 2px 0 #373737; margin-bottom: 12px; }
 .result-rewards { display: flex; justify-content: center; gap: 24px; margin: 16px 0; }
-.reward-item { font-size: 18px; font-weight: 600; }
+.reward-item { font-size: 10px; font-family: 'Press Start 2P', monospace; color: var(--mc-gold); text-shadow: 1px 1px 0 #373737; }
 .result-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 16px; }
-.btn-secondary { background: #fff; border: 2px solid #4ECDC4; border-radius: 30px; padding: 12px 24px; font-size: 15px; font-weight: 600; color: #4ECDC4; cursor: pointer; }
+.btn-secondary {
+  background: #555; border: 2px solid #373737; border-top-color: #8B8B8B; border-left-color: #8B8B8B;
+  box-shadow: inset -2px -2px 0 #373737, inset 2px 2px 0 #8B8B8B;
+  padding: 12px 24px; font-size: 8px; font-family: 'Press Start 2P', monospace; color: #fff;
+  text-shadow: 1px 1px 0 #373737; cursor: pointer;
+}
 </style>
